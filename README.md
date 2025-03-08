@@ -50,4 +50,16 @@ push an existing repository from the command line
     git push -u origin main
     
 create your local branch to work and commit to main:
-    ggit checkout -b <your-branch-name>
+    git checkout -b <your-branch-name>   # Ensure you're on the your-branch-name
+    git merge main
+    git status
+    Add your code
+    git add .
+    git commit -m "comment"
+    git push --set-upstream origin <your-branch-name>
+Create a pull request for 'systemTesting' on GitHub by visiting:
+    Login to git and click on repo - check Compare & pull request button appeared
+     click on 'Compare & pull request' button
+     click on 'Create pull request'
+     click on 'Merge pull request'
+     click on 'Confirm merge'
