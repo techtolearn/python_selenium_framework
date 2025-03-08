@@ -1,4 +1,3 @@
-import pytest
 
 def test_valid_login(login_page):  # login_page is automatically passed as a fixture
     login_page.login("user", "pass")

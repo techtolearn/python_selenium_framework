@@ -67,6 +67,13 @@ Login to git and click on repo - check Compare & pull request button appeared
     git checkout main
     git pull origin main
 
+Key note:
+when you want add a file and get the warning like below, simply execute the following commanad
+PS C:\Users\satyi\PycharmProjects\python_selenium_framework> git add .
+warning: in the working copy of '.idea/inspectionProfiles/profiles_settings.xml', LF will be replaced by CRLF the next time Git touches it
+    git config --global core.autocrlf true
+
+
 
 #****************************Adding libraries****************************
     pip install selenium 

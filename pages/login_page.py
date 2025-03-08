@@ -1,6 +1,6 @@
 from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
-#from locators.login_locators import USERNAME_FIELD, PASSWORD_FIELD, LOGIN_BUTTON
+# from locators.login_locators import USERNAME_FIELD, PASSWORD_FIELD, LOGIN_BUTTON
 
 
 class LoginPage(BasePage):
