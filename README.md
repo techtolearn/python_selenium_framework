@@ -66,3 +66,18 @@ Login to git and click on repo - check Compare & pull request button appeared
  Pull the Latest main Branch    
     git checkout main
     git pull origin main
+
+
+#****************************Adding libraries****************************
+    pip install selenium 
+#if pip is not recognizing means, path of pip.exe is not added into the environment variable
+#note: add this in system environment variable as path [pip,exe present under Scripts]
+#C:\Users\YourUser\AppData\Local\Programs\Python\Python39\Scripts
+
+or 
+    py -m pip install <package_name>  #pip doesn't work
+
+
+Note: whenever you install the packages using pip- it doesn't track in the requirement.txt
+sue the below command to import
+    pip freeze > requirements.txt
