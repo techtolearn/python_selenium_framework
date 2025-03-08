@@ -1,0 +1,21 @@
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore log files
+*.log
+
+# Ignore node_modules (for Node.js projects)
+node_modules/
+
+# Ignore Python virtual environment
+venv/
+
+# Ignore compiled files
+*.class
+*.pyc
+*.o
+*.exe
+
+# Ignore environment files
+.env

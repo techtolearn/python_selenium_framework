@@ -33,10 +33,10 @@ selenium_pom_framework/
 │─── 📜 requirements.txt        # Dependencies (selenium, pytest, allure, etc.)
 │─── 📜 pytest.ini              # Pytest Configuration
 │─── 📜 README.md               # Project Documentation
-
+│─── 📜 .ignore                 # Add Unwanted Files/Folders to .gitignore
 Git flow: 
 Initialize Git in Your Project Folder
-    once above folder structure has created, click on terminal in pycharm
+    once above folder structure has created, click on terminal in pgit add .gitignoreycharm
     git init
 
 Add Remote Repository (GitHub/GitLab/Bitbucket, etc.)
@@ -44,7 +44,10 @@ Add Remote Repository (GitHub/GitLab/Bitbucket, etc.)
 
 push an existing repository from the command line
     git remote add origin https://github.com/techtolearn/python_selenium_framework.git
-    git branch -M main
+    git branch -M main  # Ensure you're on the main branch
+    git add .
+    git commit -m "first commit"
     git push -u origin main
-    git remote add origin https://github.com/techtolearn/python_selenium_framework.git
     
+create your local branch to work and commit to main:
+    ggit checkout -b <your-branch-name>
