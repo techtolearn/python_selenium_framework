@@ -22,3 +22,4 @@ venv/
 
 .idea/workspace.xml
 .idea/*.iml
+*.ini
