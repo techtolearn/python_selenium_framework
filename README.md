@@ -74,6 +74,9 @@ warning: in the working copy of '.idea/inspectionProfiles/profiles_settings.xml'
     git config --global core.autocrlf true
 
 
+File deletion: 
+    e.g. git rm --cached <filename>.ini
+
 
 #****************************Adding libraries****************************
     pip install selenium 
@@ -88,3 +91,50 @@ or
 Note: whenever you install the packages using pip- it doesn't track in the requirement.txt
 sue the below command to import
     pip freeze > requirements.txt
+
+
+Report generation: follow the instructions using below link to implement the report
+    reference : 
+            https://pytest-html.readthedocs.io/en/latest/user_guide.html
+            https://docs.pytest.org/en/stable/how-to/output.html
+            https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+            https://pytest-cov.readthedocs.io/en/latest/reporting.html
+            https://pytest-with-eric.com/plugins/pytest-html/#Conclusion
+
+HTML Reports with pytest-html
+    pip install pytest-html
+Run Tests with HTML Report Generation:
+    pytest --html=reports/report.html
+Add Metadata for Better Reporting: In your conftest.py, include:
+    import pytest
+    def pytest_html_report_title(report):
+    report.title = "Selenium Automation Test Report"
+
+Securely Store Passwords:
+1. Use Environment Variables (Recommended)
+    Storing passwords in code is risky. Instead, store them securely using environment variables.
+    Add your password to your system's environment variables:
+   1.1. Windows
+       setx PASSWORD "your_secure_password"
+    1.2 Linux/Mac:
+        export PASSWORD="your_secure_password"
+   1.3. Access it in your config.py or login_page.py like this:
+        import os
+        PASSWORD = os.getenv("PASSWORD")
+
+2. Use .env Files (Alternative Approach)
+    pip install python-dotenv 
+Create a .env file in your root folder:
+    PASSWORD=your_secure_password
+Load it in config.py:
+    from dotenv import load_dotenv
+    import os
+    load_dotenv()  # Load environment variables from .env file
+    PASSWORD = os.getenv("PASSWORD")
+
+
+ Recommended Improvements for Your Framework
+✅ Use .env or environment variables for sensitive data.
+✅ Leverage pytest.ini for better pytest configurations.
+✅ Store report files in the /reports/ folder for easy tracking.
+✅ For CI/CD integration, Allure is highly compatible with Jenkins, GitLab, etc.
