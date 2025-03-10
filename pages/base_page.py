@@ -9,12 +9,12 @@ class BasePage:
     def __init__(self, driver):
         self.driver = driver
 
-    def click_wait(self, locator):
+    def click(self, locator):
         WebDriverWait(self.driver,10).until(EC.element_to_be_clickable(locator)).click()
 
-    @staticmethod
-    def click(self, locator):
-        locator.click()
+    def click_element(self, locator):
+        element = self.driver.find_element(*locator)  # Unpack the locator tuple and find the element
+        element.click()  # Now click the element
 
     def enter_text(self, locator, text):
         WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator)).send_keys(text)
