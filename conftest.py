@@ -29,7 +29,7 @@ def pytest_addoption(parser):
 
 
 @pytest.fixture(scope="class")
-def driver(request):  # Added 'request' parameter for fixture
+def setup(request):  # Added 'request' parameter for fixture
     """ Here we are doing setup for browser and the URL """
 
     global driver
@@ -71,7 +71,7 @@ def driver(request):  # Added 'request' parameter for fixture
 
 
 @pytest.fixture(scope="function")
-def login_page(driver):  # Injecting the driver into the login_page fixture
+def login_page(setup):  # Injecting the driver into the login_page fixture
     """Fixture to return the LoginPage object"""
     return LoginPage(driver, URL, USERNAME, PASSWORD)  # Pass LOGIN_URL to LoginPage
 
@@ -163,6 +163,6 @@ def _capture_screenshot(name):
     # save the Screenshot
     try:
         # Save the screenshot to the file
-        driver.get_screenshot_as_file(reports_dir + '/' + name)
+        driver.save_screenshot(reports_dir + '/' + name)
     except Exception as e:
         print(f"Error capturing screenshot: {e}")
