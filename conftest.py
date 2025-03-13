@@ -1,3 +1,4 @@
+import logging
 import os
 import time
 from datetime import datetime
@@ -16,7 +17,6 @@ from config.config import TestData
 from pages.login_page import LoginPage
 from dotenv import load_dotenv
 
-
 load_dotenv()  # Load environment variables from .env file
 PASSWORD = os.getenv("PASSWORD")
 USERNAME = os.getenv("USERID")
@@ -31,7 +31,6 @@ def pytest_addoption(parser):
 @pytest.fixture(scope="class")
 def setup(request):  # Added 'request' parameter for fixture
     """ Here we are doing setup for browser and the URL """
-
     global driver
     browser_name = request.config.getoption("browser_name")
     capabilities = DesiredCapabilities.CHROME.copy()
@@ -96,18 +95,27 @@ def create_report_folder():
 @pytest.hookimpl(tryfirst=True)
 def pytest_configure(config):
     """ Updates the default configurations of pytest """
-    # Create the project folder
+
     create_report_folder()
-    # custom report file
+
+    # Log file configuration
+    log_file = Path(reports_dir) / "logs" / "test_log.log"
+    log_file.parent.mkdir(parents=True, exist_ok=True)  # Ensure the 'logs' folder is created
+    logging.basicConfig(
+        filename=log_file,
+        level=logging.ERROR,  # Captures only errors and critical failures
+        format="%(asctime)s [%(levelname)s] %(message)s - [%(filename)s:%(lineno)d]",
+        datefmt="%Y-%m-%d %H:%M:%S"
+    )
+
     report = reports_dir / "report.html"
-    # adjust plugin options (Updating the report path)
     config.option.htmlpath = report
     config.option.self_contained_html = True
 
 
 def pytest_html_report_title(report):
     """ Sets a custom title for the HTML report (browser tab) """
-    report.title = "API Test Automation Results"
+    report.title = TestData.REPORT_TITLE
 
 
 def pytest_html_results_summary(prefix, summary, postfix):
@@ -125,13 +133,13 @@ def pytest_html_results_table_header(cells):
 
 def pytest_html_results_table_row(report, cells):
     """ Adds row two column values to the row """
-    cells.insert(2, html.td("report.description"))
+    cells.insert(2, html.td(report.description))
     cells.insert(3, html.td(datetime.now(), class_='col-time'))
     cells.pop()
 
 
 @pytest.hookimpl(hookwrapper=True)
-def pytest_runtest_makereport(item):
+def pytest_runtest_makereport(item, call):
     """
     Extends the PyTest Plugin to take and embed screenshot in html report, whenever test fails.
     :param item:
@@ -141,28 +149,29 @@ def pytest_runtest_makereport(item):
     report = outcome.get_result()
     report.description = str(item.function.__doc__)
     extra = getattr(report, 'extra', [])
+    if report.when == "call" and report.failed:
+        logging.error(f"Test Failed: {item.name} - {call.excinfo}")
     if report.when == 'call' or report.when == "setup":
         xfail = hasattr(report, 'wasxfail')
         if (report.skipped and xfail) or (report.failed and not xfail):
             file_name = report.nodeid.replace("::", "_") + ".png"
             _capture_screenshot(file_name)
             if file_name:
-                html = '<div><img src="%s" alt="screenshot" style="width:304px;height:228px;" ' \
-                       'onclick="window.open(this.src)" align="right"/></div>' % file_name
-                extra.append(pytest_html.extras.html(html))
+                screenshot_html = '<div><img src="%s" alt="screenshot" style="width:304px;height:228px;" ' \
+                                  'onclick="window.open(this.src)" align="right"/></div>' % file_name
+                extra.append(pytest_html.extras.html(screenshot_html))
         report.extra = extra
 
 
 def _capture_screenshot(name):
-    """ Saves the captured screenshot to the report directory """
+    """Saves the captured screenshot to the report directory."""
     global reports_dir
-    reports_dir = str(Path(reports_dir))
-    if not os.path.exists(os.path.join(reports_dir + '/tests')):
+    reports_dir = str(Path(reports_dir).resolve())
+
+    if not os.path.exists(reports_dir + '/tests'):
         os.makedirs(reports_dir + '/tests')
 
-    # save the Screenshot
     try:
-        # Save the screenshot to the file
-        driver.save_screenshot(reports_dir + '/' + name)
+        driver.get_screenshot_as_file(reports_dir + '/' + name)
     except Exception as e:
         print(f"Error capturing screenshot: {e}")
