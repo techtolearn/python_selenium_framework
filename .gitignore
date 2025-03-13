@@ -23,7 +23,7 @@ __pycache__/
 logs/
 results/logs/
 **/logs/*
-../results/reports/test/*.png
+results/reports/
 ../results/reports/*.html
 .test_results.html
 
