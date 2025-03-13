@@ -602,15 +602,15 @@ class BasePage:
         return row.get(column_name)
 
     # Example dictionary representing a row
-    row = {'column1': 'value1', 'column2': 'value2', 'column3': 'value3'}
-
-    # Iterate over the keys (column names)
-    for column_name in row.keys():
-        print(column_name)
-
-    # Iterate over the items (column name and value)
-    for column_name, value in row.items():
-        print(column_name, value)
+    # row = {'column1': 'value1', 'column2': 'value2', 'column3': 'value3'}
+    #
+    # # Iterate over the keys (column names)
+    # for column_name in row.keys():
+    #     print(column_name)
+    #
+    # # Iterate over the items (column name and value)
+    # for column_name, value in row.items():
+    #     print(column_name, value)
 
     def del_records_from_table(self, query):
         logging.info("Deleting records from the table")

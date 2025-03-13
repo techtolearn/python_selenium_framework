@@ -22,11 +22,11 @@ class LoginPage(BasePage):
     def login(self):
         self.enter_text(self.USERNAME_FIELD, self.user_name)
         self.enter_text(self.PASSWORD_FIELD, self.password)
-        self.click_element(self.LOGIN_BUTTON)
+        self.click(self.LOGIN_BUTTON)
 
     def login_with_new_tab(self):
         self.user_name = "Testing"
         """Example using Selenium 4 new tab feature"""
         self.enter_text(self.USERNAME_FIELD, self.user_name)
         self.enter_text(self.PASSWORD_FIELD, self.password)
-        self.click_element(self.LOGIN_BUTTON)
+        self.click(self.LOGIN_BUTTON)
