@@ -51,6 +51,14 @@ class BasePage:
         elements = self._wait.until(EC.presence_of_element_located(locator))
         return elements
 
+    def get_elements_click(self, locator):
+        for index in range(len(self.driver.find_elements(*locator))):
+            elements = self.driver.find_elements(*locator)  # Re-locate each time
+            elements[index].click()
+
+    def get_elements_and_click(self, locator):
+        [element.click() for element in self.driver.find_elements(*locator)]
+
     def get_element_with_retry(self, locator, max_retries=3):
         for attempt in range(max_retries):
             try:
